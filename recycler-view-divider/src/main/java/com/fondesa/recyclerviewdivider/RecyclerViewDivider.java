@@ -10,6 +10,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -144,11 +145,16 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
             if (builder.visibilityFactory.displayDividerForItem(listSize, position)) {
                 final Drawable divider = builder.drawableFactory.drawableForItem(listSize, position);
                 final int size = builder.sizeFactory.sizeForItem(divider, orientation, listSize, position);
-
-                if (orientation == RecyclerView.VERTICAL) {
-                    outRect.set(0, 0, 0, size);
-                } else {
-                    outRect.set(0, 0, size, 0);
+                if(parent.getLayoutManager() instanceof LinearLayoutManager) {
+                    if (orientation == RecyclerView.VERTICAL) {
+                        outRect.set(0, 0, 0, size);
+                    } else {
+                        outRect.set(0, 0, size, 0);
+                    }
+                }
+                else
+                {
+                    outRect.set(0, 0, size, size);
                 }
             }
         }
